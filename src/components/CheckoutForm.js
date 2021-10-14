@@ -66,14 +66,14 @@ const CheckoutForm = () => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<div className="checkout-form">
-				<label htmlFor="checkout-address">Shipping Address</label>
+				<label htmlFor="checkout-address"> Addresa de livrare</label>
 				<input
 					id="checkout-address"
 					type="text"
 					onChange={(e) => setComandaDetails({ ...ComandaDetails, address: e.target.value })}
 				/>
 				<div className="stripe-section">
-					<label htmlFor="stripe-element"> Credit or debit card </label>
+					<label htmlFor="stripe-element"> Introdu detaliile cardului </label>
 					<CardElement id="stripe-element" options={CARD_ELEMENT_OPTIONS} onChange={handleChange} />
 				</div>
 				<div className="card-errors" role="alert">
@@ -81,7 +81,7 @@ const CheckoutForm = () => {
 				</div>
 			</div>
 			<button type="submit" className="btn">
-				Submit Payment
+				Finalizeaza Comanda
 			</button>
 		</form>
 	);
