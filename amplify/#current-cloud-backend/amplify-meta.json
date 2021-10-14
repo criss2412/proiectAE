@@ -1,0 +1,132 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-magazinhaine-prod-154410-authRole",
+			"UnauthRoleArn": "arn:aws:iam::535616595152:role/amplify-magazinhaine-prod-154410-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::535616595152:role/amplify-magazinhaine-prod-154410-authRole",
+			"Region": "us-east-2",
+			"DeploymentBucketName": "amplify-magazinhaine-prod-154410-deployment",
+			"UnauthRoleName": "amplify-magazinhaine-prod-154410-unauthRole",
+			"StackName": "amplify-magazinhaine-prod-154410",
+			"StackId": "arn:aws:cloudformation:us-east-2:535616595152:stack/amplify-magazinhaine-prod-154410/c671a4d0-29c7-11ec-9a49-02c917c0a4d8",
+			"AmplifyAppId": "dvx3nl7658j3z"
+		}
+	},
+	"auth": {
+		"magazinhaineb3f3eb33": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false,
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-magazinhaine-prod-154410-deployment/amplify-cfn-templates/auth/magazinhaineb3f3eb33-cloudformation-template.yml",
+				"logicalId": "authmagazinhaineb3f3eb33"
+			},
+			"lastPushTimeStamp": "2021-10-11T14:46:47.757Z",
+			"output": {
+				"AppClientSecret": "t9vbprrnvb95m7lrkp85i8kegm10vv9k6nlvupenl4a9cr5oc1a",
+				"UserPoolId": "us-east-2_TRXoBXWLh",
+				"AppClientIDWeb": "1v5p135h1h9t9ag4nifa9ph1bo",
+				"AppClientID": "7pjte01ncq7lfolnstjh4bclc7",
+				"IdentityPoolId": "us-east-2:b6ff425c-7835-44a8-be80-75aae415d9a6",
+				"IdentityPoolName": "magazinhaineb3f3eb33_identitypool_b3f3eb33__prod",
+				"UserPoolName": "magazinhaineb3f3eb33_userpool_b3f3eb33"
+			},
+			"lastPushDirHash": "DrGBejRGkZnB1BdrKqaXGcYrp70="
+		}
+	},
+	"storage": {
+		"poze": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-magazinhaine-prod-154410-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"logicalId": "storagepoze"
+			},
+			"lastPushTimeStamp": "2021-10-11T14:46:47.758Z",
+			"output": {
+				"BucketName": "poze154410-prod",
+				"Region": "us-east-2"
+			},
+			"lastPushDirHash": "UoH+LXJrWfENiYc2r/IqlMRRZ9w="
+		}
+	},
+	"function": {
+		"processPayment": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [],
+			"lastBuildTimeStamp": "2021-10-11T14:45:33.524Z",
+			"lastPackageTimeStamp": "2021-10-11T14:45:34.929Z",
+			"distZipFilename": "processPayment-7370617774514e6d7838-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-magazinhaine-prod-154410-deployment/amplify-cfn-templates/function/processPayment-cloudformation-template.json",
+				"logicalId": "functionprocessPayment"
+			},
+			"lastPushTimeStamp": "2021-10-11T14:46:47.763Z",
+			"output": {
+				"Region": "us-east-2",
+				"Arn": "arn:aws:lambda:us-east-2:535616595152:function:processPayment-prod",
+				"Name": "processPayment-prod",
+				"LambdaExecutionRole": "magazinhaineLambdaRolee0d70ac3-prod"
+			},
+			"lastPushDirHash": "yWKjACmnTChyalIjK+8nsTpz6CQ="
+		},
+		"createOrder": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [],
+			"lastBuildTimeStamp": "2021-10-10T14:15:51.043Z",
+			"lastPackageTimeStamp": "2021-10-10T14:15:51.238Z",
+			"distZipFilename": "createOrder-505a6469502b792f3246-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-magazinhaine-prod-154410-deployment/amplify-cfn-templates/function/createOrder-cloudformation-template.json",
+				"logicalId": "functioncreateOrder"
+			},
+			"lastPushTimeStamp": "2021-10-11T14:46:47.759Z",
+			"output": {
+				"Region": "us-east-2",
+				"Arn": "arn:aws:lambda:us-east-2:535616595152:function:createOrder-prod",
+				"Name": "createOrder-prod",
+				"LambdaExecutionRole": "magazinhaineLambdaRoleeca0fedd-prod"
+			},
+			"lastPushDirHash": "kHAPVrLlHDwMjmyg93AN+Ae1P8E="
+		}
+	},
+	"api": {
+		"magazinhaine": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [
+						{
+							"authenticationType": "API_KEY",
+							"apiKeyConfig": {
+								"description": "Guest user acces to books",
+								"apiKeyExpirationDays": 365
+							}
+						}
+					],
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authmagazinhaineb3f3eb33"
+						}
+					}
+				},
+				"GraphQLAPIIdOutput": "jj476myoarctxhsl4o3efoq2nu",
+				"GraphQLAPIEndpointOutput": "https://oui5afrv65f3rnsieofvvpxmi4.appsync-api.us-east-2.amazonaws.com/graphql",
+				"GraphQLAPIKeyOutput": "da2-kwj2i7mttvgjbnuw22mvck54pm"
+			},
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-magazinhaine-prod-154410-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"logicalId": "apimagazinhaine"
+			},
+			"lastPushTimeStamp": "2021-10-11T14:46:47.760Z",
+			"lastPushDirHash": "NoUt3UeM3wqaECSUi1R3maEZxS4="
+		}
+	}
+}

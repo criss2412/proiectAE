@@ -1,0 +1,20 @@
+{
+    "prod": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-magazinhaine-prod-154410-authRole",
+            "UnauthRoleArn": "arn:aws:iam::535616595152:role/amplify-magazinhaine-prod-154410-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::535616595152:role/amplify-magazinhaine-prod-154410-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "amplify-magazinhaine-prod-154410-deployment",
+            "UnauthRoleName": "amplify-magazinhaine-prod-154410-unauthRole",
+            "StackName": "amplify-magazinhaine-prod-154410",
+            "StackId": "arn:aws:cloudformation:us-east-2:535616595152:stack/amplify-magazinhaine-prod-154410/c671a4d0-29c7-11ec-9a49-02c917c0a4d8",
+            "AmplifyAppId": "dvx3nl7658j3z"
+        },
+        "categories": {
+            "auth": {
+                "magazinhaineb3f3eb33": {}
+            }
+        }
+    }
+}

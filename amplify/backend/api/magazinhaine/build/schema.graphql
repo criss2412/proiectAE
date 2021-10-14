@@ -1,0 +1,308 @@
+type Produs @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  title: String!
+  description: String
+  image: String
+  firma: String
+  featured: Boolean
+  price: Float
+  Comenzi(Comanda_id: ModelIDKeyConditionInput, filter: ModelProdusComandaFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelProdusComandaConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type ProdusComanda {
+  id: ID!
+  Produs_id: ID!
+  Comanda_id: ID!
+  Comanda: Comanda
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  Produs: Produs @aws_api_key @aws_cognito_user_pools
+}
+
+type Comanda {
+  id: ID!
+  user: String!
+  date: String
+  total: Float
+  Produss(Produs_id: ModelIDKeyConditionInput, filter: ModelProdusComandaFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelProdusComandaConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum Comenzitatus {
+  SUCCESS
+  FAILED
+}
+
+input CartItem {
+  id: ID!
+  title: String
+  image: String
+  price: Float
+  amount: Int
+}
+
+input ProcessComandaInput {
+  id: ID!
+  cart: [CartItem]
+  total: Float!
+  token: String!
+  address: String
+}
+
+type Mutation {
+  processComanda(input: ProcessComandaInput!): Comenzitatus
+  createProdus(input: CreateProdusInput!, condition: ModelProdusConditionInput): Produs
+  updateProdus(input: UpdateProdusInput!, condition: ModelProdusConditionInput): Produs
+  deleteProdus(input: DeleteProdusInput!, condition: ModelProdusConditionInput): Produs
+  createProdusComanda(input: CreateProdusComandaInput!, condition: ModelProdusComandaConditionInput): ProdusComanda
+  updateProdusComanda(input: UpdateProdusComandaInput!, condition: ModelProdusComandaConditionInput): ProdusComanda
+  deleteProdusComanda(input: DeleteProdusComandaInput!, condition: ModelProdusComandaConditionInput): ProdusComanda
+  createComanda(input: CreateComandaInput!, condition: ModelComandaConditionInput): Comanda
+  updateComanda(input: UpdateComandaInput!, condition: ModelComandaConditionInput): Comanda
+  deleteComanda(input: DeleteComandaInput!, condition: ModelComandaConditionInput): Comanda
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelProdusConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Produs]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelProdusFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  description: ModelStringInput
+  image: ModelStringInput
+  firma: ModelStringInput
+  featured: ModelBooleanInput
+  price: ModelFloatInput
+  and: [ModelProdusFilterInput]
+  or: [ModelProdusFilterInput]
+  not: ModelProdusFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getComanda(id: ID!): Comanda
+  listComandas(filter: ModelComandaFilterInput, limit: Int, nextToken: String): ModelComandaConnection
+  listProduss(filter: ModelProdusFilterInput, limit: Int, nextToken: String): ModelProdusConnection @aws_api_key @aws_cognito_user_pools
+  getProdus(id: ID!): Produs @aws_api_key @aws_cognito_user_pools
+}
+
+input CreateProdusInput {
+  id: ID
+  title: String!
+  description: String
+  image: String
+  firma: String
+  featured: Boolean
+  price: Float
+}
+
+input UpdateProdusInput {
+  id: ID!
+  title: String
+  description: String
+  image: String
+  firma: String
+  featured: Boolean
+  price: Float
+}
+
+input DeleteProdusInput {
+  id: ID
+}
+
+input ModelProdusConditionInput {
+  title: ModelStringInput
+  description: ModelStringInput
+  image: ModelStringInput
+  firma: ModelStringInput
+  featured: ModelBooleanInput
+  price: ModelFloatInput
+  and: [ModelProdusConditionInput]
+  or: [ModelProdusConditionInput]
+  not: ModelProdusConditionInput
+}
+
+input CreateProdusComandaInput {
+  id: ID
+  Produs_id: ID!
+  Comanda_id: ID!
+}
+
+input UpdateProdusComandaInput {
+  id: ID!
+  Produs_id: ID
+  Comanda_id: ID
+}
+
+input DeleteProdusComandaInput {
+  id: ID
+}
+
+input ModelProdusComandaConditionInput {
+  Produs_id: ModelIDInput
+  Comanda_id: ModelIDInput
+  and: [ModelProdusComandaConditionInput]
+  or: [ModelProdusComandaConditionInput]
+  not: ModelProdusComandaConditionInput
+}
+
+type ModelComandaConnection {
+  items: [Comanda]
+  nextToken: String
+}
+
+input ModelComandaFilterInput {
+  id: ModelIDInput
+  user: ModelStringInput
+  date: ModelStringInput
+  total: ModelFloatInput
+  and: [ModelComandaFilterInput]
+  or: [ModelComandaFilterInput]
+  not: ModelComandaFilterInput
+}
+
+input CreateComandaInput {
+  id: ID
+  user: String!
+  date: String
+  total: Float
+}
+
+input UpdateComandaInput {
+  id: ID!
+  user: String
+  date: String
+  total: Float
+}
+
+input DeleteComandaInput {
+  id: ID
+}
+
+input ModelComandaConditionInput {
+  user: ModelStringInput
+  date: ModelStringInput
+  total: ModelFloatInput
+  and: [ModelComandaConditionInput]
+  or: [ModelComandaConditionInput]
+  not: ModelComandaConditionInput
+}
+
+input ModelIDKeyConditionInput {
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+type ModelProdusComandaConnection {
+  items: [ProdusComanda]
+  nextToken: String
+}
+
+input ModelProdusComandaFilterInput {
+  id: ModelIDInput
+  Produs_id: ModelIDInput
+  Comanda_id: ModelIDInput
+  and: [ModelProdusComandaFilterInput]
+  or: [ModelProdusComandaFilterInput]
+  not: ModelProdusComandaFilterInput
+}

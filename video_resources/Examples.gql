@@ -1,0 +1,66 @@
+#A user get their own ProdusComanda lists
+query{
+  listComenzi{
+    items{
+      total
+      Produss{
+        items{
+          Produs{
+            title
+            image
+            price
+            firma
+          }
+        }
+      }
+    }
+  }
+}
+
+#But admin can get all the Comenzi of all the users and add filters too.
+query{
+  listComenzi(filter: {
+    user: {
+      eq: "Manoj Fernando"
+    }
+  }){
+    items{
+      total
+      Produss{
+        items{
+          Produs{
+            title
+            image
+            price
+            firma
+          }
+        }
+      }
+    }
+  }
+}
+
+# Link Produs and the Comanda
+mutation{
+  createProdusComanda(input: {
+    id: "bo123"
+    Produs_id: "673309be-1769-493f-9d15-4f75e010bde1"
+    Comanda_id: "1001"
+  }){
+  	Comanda_id
+    Produs_id
+  }
+}
+
+# Create a new Comanda
+mutation{
+  createComanda(input: {
+    id: "1001"
+    user: "Manoj Fernando"
+    total: 95.90
+  }){
+    id
+    user
+    total
+  }
+}

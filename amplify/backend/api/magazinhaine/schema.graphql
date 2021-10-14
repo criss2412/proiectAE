@@ -1,0 +1,84 @@
+type Produs
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      # allow admins to create, update and delete Produss
+      { allow: groups, groups: ["Admin"] }
+      # allow all authenticated users to view Produss
+      { allow: private, operations: [read] }
+      # allow all guest users (not authenticated) to view Produss
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  description: String
+  image: String
+  firma: String
+  featured: Boolean
+  price: Float
+  Comenzi: [ProdusComanda] @connection(keyName: "byProdus", fields: ["id"])
+}
+
+type ProdusComanda
+  @model(queries: null, subscriptions: null)
+  @key(name: "byProdus", fields: ["Produs_id", "Comanda_id"])
+  @key(name: "byComanda", fields: ["Comanda_id", "Produs_id"])
+  @auth(
+    rules: [
+      # allow admins to create ProdusComenzi for customers by using customer email in lambda
+      { allow: owner, identityClaim: "email", ownerField: "customer" }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID!
+  Produs_id: ID!
+  Comanda_id: ID!
+  Produs: Produs @connection(fields: ["Produs_id"])
+  Comanda: Comanda @connection(fields: ["Comanda_id"])
+}
+
+type Comanda
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      # only owner can see his Comenzi
+      { allow: owner, identityClaim: "email", ownerField: "customer" }
+      # allow admins to view Comenzi
+      { allow: groups, groups: ["Admin"] }
+    ]
+  )
+  @key(name: "byUser", fields: ["user"]) {
+  id: ID!
+  user: String!
+  date: String
+  total: Float
+  Produss: [ProdusComanda] @connection(keyName: "byComanda", fields: ["id"])
+}
+
+enum Comenzitatus {
+  SUCCESS
+  FAILED
+}
+
+input CartItem {
+  id: ID!
+  title: String
+  image: String
+  price: Float
+  amount: Int
+}
+
+input ProcessComandaInput {
+  id: ID!
+  cart: [CartItem]
+  total: Float!
+  token: String!
+  address: String
+}
+
+type Mutation {
+  processComanda(input: ProcessComandaInput!): Comenzitatus
+    @function(name: "processPayment-${env}")
+    @function(name: "createComanda-${env}")
+}
